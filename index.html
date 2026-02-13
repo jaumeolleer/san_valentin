@@ -1,93 +1,544 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>¿Quieres ser mi San Valentín? ❤️</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            color: #fff;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>¿Quieres ser mi San Valentín? ❤️</title>
+  <style>
+    :root{
+      --bg1:#0f1020;
+      --bg2:#2b1055;
+      --accent:#ff4d6d;
+      --accent2:#ffd6e0;
+      --card: rgba(255,255,255,.10);
+      --stroke: rgba(255,255,255,.18);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+    }
 
-        .card {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 40px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-            max-width: 600px;
-        }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(255,77,109,.28), transparent 60%),
+        radial-gradient(900px 700px at 85% 30%, rgba(255,214,224,.18), transparent 55%),
+        radial-gradient(1000px 900px at 50% 110%, rgba(120,76,255,.18), transparent 55%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+    }
 
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
+    /* estrellas suaves */
+    .stars, .stars::before, .stars::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,.55), transparent 40%),
+        radial-gradient(2px 2px at 120px 160px, rgba(255,255,255,.45), transparent 40%),
+        radial-gradient(1px 1px at 220px 80px, rgba(255,255,255,.35), transparent 40%),
+        radial-gradient(1.5px 1.5px at 340px 220px, rgba(255,255,255,.35), transparent 40%),
+        radial-gradient(2px 2px at 480px 120px, rgba(255,255,255,.5), transparent 40%),
+        radial-gradient(1px 1px at 560px 260px, rgba(255,255,255,.35), transparent 40%),
+        radial-gradient(2px 2px at 700px 80px, rgba(255,255,255,.45), transparent 40%),
+        radial-gradient(1px 1px at 820px 220px, rgba(255,255,255,.35), transparent 40%),
+        radial-gradient(2px 2px at 940px 140px, rgba(255,255,255,.4), transparent 40%);
+      background-size: 1000px 600px;
+      opacity:.45;
+      animation: drift 18s linear infinite;
+      pointer-events:none;
+    }
+    .stars::before{ opacity:.25; animation-duration: 26s; filter: blur(0.2px); }
+    .stars::after{ opacity:.15; animation-duration: 34s; filter: blur(0.6px); }
 
-        p {
-            font-size: 1.2em;
-            line-height: 1.6em;
-        }
+    @keyframes drift{
+      from{ transform: translateY(0); }
+      to{ transform: translateY(-60px); }
+    }
 
-        .heart {
-            font-size: 3em;
-            animation: latido 1s infinite;
-        }
+    .wrap{
+      width:min(900px, 92vw);
+      padding: 28px;
+      position:relative;
+      z-index:2;
+    }
 
-        @keyframes latido {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
+    .card{
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 34px 30px 28px;
+      position:relative;
+      overflow:hidden;
+    }
 
-        button {
-            margin-top: 30px;
-            padding: 12px 25px;
-            font-size: 1.1em;
-            border: none;
-            border-radius: 30px;
-            background-color: #ff4b5c;
-            color: white;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(500px 200px at 20% 0%, rgba(255,77,109,.25), transparent 60%),
+        radial-gradient(420px 220px at 85% 20%, rgba(255,214,224,.18), transparent 60%),
+        radial-gradient(520px 240px at 50% 120%, rgba(120,76,255,.20), transparent 55%);
+      filter: blur(8px);
+      opacity:.9;
+      pointer-events:none;
+    }
 
-        button:hover {
-            background-color: #ff1e3c;
-            transform: scale(1.1);
-        }
-    </style>
+    header{
+      position:relative;
+      text-align:center;
+      margin-bottom: 18px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.22);
+      background: rgba(0,0,0,.18);
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .badge .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(255,77,109,.18);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes pulse{
+      0%,100%{ transform: scale(1); opacity:.85;}
+      50%{ transform: scale(1.12); opacity:1;}
+    }
+
+    h1{
+      margin: 16px 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      text-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    .subtitle{
+      margin: 0 auto;
+      max-width: 62ch;
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .content{
+      position:relative;
+      display:grid;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .letter{
+      margin: 0 auto;
+      max-width: 70ch;
+      padding: 18px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.14);
+      line-height: 1.75;
+      color: rgba(255,255,255,.86);
+      font-size: 16px;
+    }
+
+    .ask{
+      margin-top: 10px;
+      display:grid;
+      place-items:center;
+      gap: 14px;
+      padding: 10px 0 6px;
+    }
+
+    .ask h2{
+      margin:0;
+      font-size: clamp(20px, 2.7vw, 28px);
+      letter-spacing: -0.01em;
+    }
+
+    .btns{
+      display:flex;
+      gap: 12px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    button{
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 16px;
+      font-weight: 650;
+      letter-spacing: .2px;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, opacity .18s ease;
+      user-select:none;
+    }
+
+    .yes{
+      background: linear-gradient(135deg, var(--accent), #ff8fa3);
+      color: white;
+      box-shadow: 0 16px 40px rgba(255,77,109,.35);
+    }
+    .yes:hover{ transform: translateY(-2px) scale(1.02); box-shadow: 0 22px 55px rgba(255,77,109,.42); }
+
+    .no{
+      background: rgba(255,255,255,.12);
+      color: rgba(255,255,255,.86);
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .no:hover{ transform: translateY(-2px); opacity: .95; }
+
+    footer{
+      position:relative;
+      margin-top: 16px;
+      text-align:center;
+      color: rgba(255,255,255,.6);
+      font-size: 13px;
+    }
+
+    /* Modal */
+    .modal{
+      position:fixed;
+      inset:0;
+      display:grid;
+      place-items:center;
+      background: rgba(0,0,0,.55);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .25s ease;
+      z-index: 50;
+    }
+    .modal.open{ opacity:1; pointer-events:auto; }
+    .modal-card{
+      width: min(560px, 92vw);
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 22px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      padding: 22px 20px;
+      text-align:center;
+      transform: translateY(10px) scale(.98);
+      transition: transform .25s ease;
+    }
+    .modal.open .modal-card{ transform: translateY(0) scale(1); }
+
+    .big-heart{
+      font-size: 54px;
+      filter: drop-shadow(0 12px 25px rgba(255,77,109,.35));
+      animation: pop 700ms ease both;
+    }
+    @keyframes pop{
+      0%{ transform: scale(.6); opacity:0; }
+      60%{ transform: scale(1.15); opacity:1; }
+      100%{ transform: scale(1); }
+    }
+
+    .modal-title{
+      margin: 10px 0 6px;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+    }
+    .modal-text{
+      margin: 0 auto 14px;
+      color: rgba(255,255,255,.8);
+      line-height: 1.6;
+      max-width: 52ch;
+      font-size: 15px;
+    }
+
+    .close{
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.86);
+      padding: 10px 16px;
+    }
+    .close:hover{ transform: translateY(-2px); }
+
+    /* Confetti canvas */
+    canvas#confetti{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      pointer-events:none;
+      z-index: 40;
+    }
+
+    /* Corazones flotantes */
+    .float{
+      position:fixed;
+      left: 50%;
+      top: 70%;
+      font-size: 18px;
+      opacity: 0;
+      animation: floatUp 1.6s ease forwards;
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,.25));
+      z-index: 45;
+      pointer-events:none;
+    }
+    @keyframes floatUp{
+      0%{ transform: translate(-50%, 0) scale(.9); opacity:0; }
+      15%{ opacity:1; }
+      100%{ transform: translate(calc(-50% + var(--x)), -240px) scale(1.25) rotate(var(--r)); opacity:0; }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="stars"></div>
+  <canvas id="confetti"></canvas>
 
-    <div class="card">
-        <div class="heart">❤️</div>
-        <h1>Para la persona más especial de mi vida</h1>
-        <p>
-            Desde que llegaste a mi vida, cada día tiene más color,
-            más alegría y más sentido.  
-            Eres mi sonrisa favorita, mi pensamiento constante
-            y mi lugar seguro.
+  <main class="wrap">
+    <section class="card" aria-label="Carta de San Valentín">
+      <header>
+        <div class="badge"><span class="dot"></span> Una pregunta importante</div>
+        <h1>Para mi persona favorita ❤️</h1>
+        <p class="subtitle">
+          Desde que estás en mi vida, todo se siente más bonito: las cosas simples, los días normales
+          y hasta los silencios. Gracias por ser hogar, risa y calma.
         </p>
+      </header>
 
-        <p>
-            No necesito una fecha en el calendario para recordarte
-            cuánto te amo, pero hoy quiero hacerlo de una forma especial.
-        </p>
+      <div class="content">
+        <div class="letter">
+          <p>
+            No sé cómo resumirlo sin quedarme corto: me encanta compartir contigo.
+            Me gusta tu forma de ver el mundo, cómo haces que lo cotidiano se vuelva especial
+            y cómo, sin darte cuenta, haces que yo quiera ser mejor.
+          </p>
+          <p>
+            Por eso hoy quiero preguntártelo de la manera más clara (y con todo mi corazón):
+          </p>
+        </div>
 
-        <h2>¿Quieres ser mi San Valentín? 💖</h2>
+        <div class="ask">
+          <h2>¿Quieres ser mi San Valentín? 💖</h2>
 
-        <button onclick="alert('¡Sabía que dirías que sí! ❤️')">
-            Sí, quiero ❤️
-        </button>
+          <div class="btns">
+            <button class="yes" id="yesBtn">Sí, quiero ❤️</button>
+            <button class="no" id="noBtn" type="button">Déjame pensarlo 🙈</button>
+          </div>
+        </div>
+
+        <footer>
+          Hecho con amor. (Y un poquito de nervios) ✨
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="big-heart">💘</div>
+      <div class="modal-title" id="modalTitle">¡Siii! 🥰</div>
+      <p class="modal-text" id="modalText">
+        Prometo que este San Valentín será precioso contigo. Te elijo hoy y siempre.
+      </p>
+      <button class="close" id="closeBtn">Cerrar</button>
     </div>
+  </div>
+
+  <script>
+    // --- Personaliza aquí si quieres ---
+    // Pon tu nombre al final del mensaje, o edita el texto del modal:
+    const modalText = document.getElementById("modalText");
+    // modalText.textContent = "Tu mensaje aquí...";
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn  = document.getElementById("noBtn");
+    const modal  = document.getElementById("modal");
+    const closeBtn = document.getElementById("closeBtn");
+
+    // Botón "no" amable: cambia el texto (sin ser pesado)
+    const noPhrases = [
+      "¿Segura? 🙈",
+      "Piénsalo… soy buena compañía 😌",
+      "Te invito a algo rico 🍓",
+      "Prometo hacerte reír 😄",
+      "Ok… pero me encantas ❤️"
+    ];
+    let noCount = 0;
+    noBtn.addEventListener("click", () => {
+      noCount++;
+      noBtn.textContent = noPhrases[Math.min(noCount, noPhrases.length-1)];
+      // micro-movimiento divertido
+      noBtn.style.transform = `translateY(-2px) rotate(${(Math.random()*6-3).toFixed(1)}deg)`;
+      setTimeout(() => (noBtn.style.transform = ""), 180);
+    });
+
+    // Modal open/close
+    function openModal(){
+      modal.classList.add("open");
+    }
+    function closeModal(){
+      modal.classList.remove("open");
+    }
+    closeBtn.addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => {
+      if(e.target === modal) closeModal();
+    });
+    window.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeModal(); });
+
+    // --- Corazones flotantes ---
+    function spawnHearts(count = 14){
+      for(let i=0;i<count;i++){
+        const el = document.createElement("div");
+        el.className = "float";
+        el.textContent = ["❤️","💖","💗","💘","💕"][Math.floor(Math.random()*5)];
+        const x = (Math.random()*260 - 130).toFixed(0) + "px";
+        const r = (Math.random()*40 - 20).toFixed(0) + "deg";
+        el.style.setProperty("--x", x);
+        el.style.setProperty("--r", r);
+        el.style.left = (50 + (Math.random()*10 - 5)) + "%";
+        el.style.top = (70 + (Math.random()*6 - 3)) + "%";
+        el.style.fontSize = (16 + Math.random()*14).toFixed(0) + "px";
+        document.body.appendChild(el);
+        el.addEventListener("animationend", ()=> el.remove());
+      }
+    }
+
+    // --- Confetti (canvas) ---
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas(){
+      canvas.width = Math.floor(window.innerWidth * devicePixelRatio);
+      canvas.height = Math.floor(window.innerHeight * devicePixelRatio);
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+      ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    let confetti = [];
+    let animId = null;
+
+    function rand(min, max){ return Math.random()*(max-min)+min; }
+
+    function startConfetti(durationMs = 1400){
+      const W = window.innerWidth;
+      const H = window.innerHeight;
+
+      // crea partículas
+      const colors = ["#ff4d6d", "#ffd6e0", "#ffffff", "#cdb4ff", "#ffafcc"];
+      const pieces = 180;
+
+      confetti = [];
+      for(let i=0;i<pieces;i++){
+        confetti.push({
+          x: rand(0, W),
+          y: rand(-40, -10),
+          vx: rand(-2.2, 2.2),
+          vy: rand(2.5, 6.8),
+          g: rand(0.03, 0.08),
+          size: rand(4, 8),
+          rot: rand(0, Math.PI*2),
+          vr: rand(-0.2, 0.2),
+          color: colors[(Math.random()*colors.length)|0],
+          shape: Math.random() < 0.22 ? "heart" : "rect"
+        });
+      }
+
+      const start = performance.now();
+      const end = start + durationMs;
+
+      function drawHeart(x, y, s, rot){
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(rot);
+        ctx.beginPath();
+        // corazón simple
+        ctx.moveTo(0, s/4);
+        ctx.bezierCurveTo(0, -s/2, -s, -s/2, -s, s/6);
+        ctx.bezierCurveTo(-s, s, 0, s, 0, s*1.2);
+        ctx.bezierCurveTo(0, s, s, s, s, s/6);
+        ctx.bezierCurveTo(s, -s/2, 0, -s/2, 0, s/4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function frame(t){
+        ctx.clearRect(0,0, window.innerWidth, window.innerHeight);
+
+        for(const p of confetti){
+          p.vy += p.g * 60;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.vr;
+
+          // wrap horizontal
+          if(p.x < -20) p.x = W + 20;
+          if(p.x > W + 20) p.x = -20;
+
+          ctx.fillStyle = p.color;
+
+          if(p.shape === "rect"){
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rot);
+            ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size*0.65);
+            ctx.restore();
+          }else{
+            drawHeart(p.x, p.y, p.size, p.rot);
+          }
+        }
+
+        if(t < end && confetti.some(p => p.y < H + 60)){
+          animId = requestAnimationFrame(frame);
+        }else{
+          ctx.clearRect(0,0, window.innerWidth, window.innerHeight);
+          confetti = [];
+          animId = null;
+        }
+      }
+
+      if(animId) cancelAnimationFrame(animId);
+      animId = requestAnimationFrame(frame);
+    }
+
+    // Click en "Sí"
+    yesBtn.addEventListener("click", () => {
+      startConfetti(1600);
+      spawnHearts(18);
+      openModal();
+
+      // mini vibración visual en la tarjeta
+      const card = document.querySelector(".card");
+      card.animate(
+        [
+          { transform: "translateY(0)" },
+          { transform: "translateY(-2px)" },
+          { transform: "translateY(0)" }
+        ],
+        { duration: 420, easing: "ease-out" }
+      );
+    });
+  </script>
+</body>
+</html>
 
 </body>
 </html>
